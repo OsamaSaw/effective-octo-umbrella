@@ -1,113 +1,98 @@
+"use client"
+
 import Image from 'next/image'
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import classNames from 'classnames';
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    const [activeImage, setActiveImage] = useState(0);
+    const [fade, setFade] = useState(false);
+    const carouselImages = [
+        'https://images.unsplash.com/photo-1593642532400-2682810df593',
+        'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5',
+        'https://images.unsplash.com/photo-1531251445707-1f000e1e87d0',
+    ];
+    const carouselTexts = ['Welcome to Our Ironworks Company', 'High Quality Fridges and Freezers', 'Custom Storage Solutions'];
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setFade(true);
+            setTimeout(() => {
+                setActiveImage((prevIndex) => (prevIndex + 1) % carouselImages.length);
+                setFade(false);
+            }, 250); // 500ms for the fade out, then change image
+        }, 3000); // Change image every 3 seconds
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+        return () => {
+            clearInterval(timer);
+        };
+    }, []);
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+    const fadeInOut = classNames({
+        'transition-opacity duration-250': true,
+        'opacity-0': fade,
+        'opacity-100': !fade,
+    });
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
+    return (
+        <main className="p-6">
+            <div className="flex items-center justify-around mb-6">
+                <h1 className="text-3xl font-semibold mr-4">Ironworks Company</h1>
+                <Image
+                    src="https://lh3.googleusercontent.com/QOM4I1unraRFRK27DBBUxrMh_KYvmRS7q_HDm4xWpn9fTDyYjQws-uNE8HU5Jtg404YXGEUJ5AQCqdn2DE-NJ5kTRKXVSx3ScGNul-lFaokf7t_z-mkgtvL5mxs2n-qdQPxMk-Pv" // path to your logo file
+                    alt="Company Logo"
+                    width={150} // adjust these values as necessary
+                    height={50} // adjust these values as necessary
+                />
+            </div>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+            <div className="relative h-96 mb-6">
+                <Image
+                    src={carouselImages[activeImage]}
+                    alt="carousel"
+                    layout="fill"
+                    objectFit="cover"
+                    className={`opacity-60 ${fadeInOut}`}
+                />
+                <div className={`absolute inset-0 flex items-center justify-center text-white text-2xl text-center px-6 ${fadeInOut}`}>
+                    {carouselTexts[activeImage]}
+                </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6">
+                <Link href="/products/fridges">
+                    <div className="border border-gray-200 p-6 cursor-pointer hover:border-blue-500 hover:shadow-lg transition duration-300">
+                        <div className="relative h-[300px] w-full"> {/* Specify the height here */}
+                            <Image
+                                src="https://images.unsplash.com/photo-1601599561213-832382fd07ba"
+                                alt="fridge"
+                                layout="fill"
+                                objectFit="cover"
+                                objectPosition="center"
+                            />
+                        </div>
+                        <h2 className="text-2xl font-semibold mt-4">Shop Fridges</h2>
+                        <p>Discover our range of high quality, commercial fridges.</p>
+                    </div>
+                </Link>
+
+                <Link href="/products/freezers">
+                    <div className="border border-gray-200 p-6 cursor-pointer hover:border-blue-500 hover:shadow-lg transition duration-300">
+                        <div className="relative h-[300px] w-full"> {/* Specify the height here */}
+                            <Image
+                                src="https://images.unsplash.com/photo-1657462216514-d16d2717c373"
+                                alt="freezer"
+                                layout="fill"
+                                objectFit="cover"
+                                objectPosition="center"
+                            />
+                        </div>
+                        <h2 className="text-2xl font-semibold mt-4">Shop Freezers</h2>
+                        <p>Keep your products fresh with our state-of-the-art freezers.</p>
+                    </div>
+                </Link>
+            </div>
+        </main>
+    )
 }
