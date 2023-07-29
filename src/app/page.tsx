@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import classNames from 'classnames';
+// import classNames from 'classnames';
 
 export default function Home() {
     const [activeImage, setActiveImage] = useState(0);
@@ -29,7 +29,7 @@ export default function Home() {
         };
     }, []);
 
-    const fadeInOut = classNames({
+    const fadeInOut = ({
         'transition-opacity duration-250': true,
         'opacity-0': fade,
         'opacity-100': !fade,
