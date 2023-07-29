@@ -12,7 +12,7 @@ export const RecurringSubItem = ({
   const { push } = useRouter();
   return (
     navItem.sub.length !== 0 && (
-      <SubMenu key={index} label={navItem.name}>
+      <>
         {navItem.sub.map((subItem: MenuType, index) => {
           return subItem.sub.length == 0 ? (
             <MenuItem
@@ -24,10 +24,12 @@ export const RecurringSubItem = ({
               {subItem.name}
             </MenuItem>
           ) : (
-            <RecurringSubItem index={index * 2} navItem={subItem} />
+            <SubMenu key={index} label={subItem.name}>
+              <RecurringSubItem index={index * 2} navItem={subItem} />{" "}
+            </SubMenu>
           );
         })}
-      </SubMenu>
+      </>
     )
   );
 };
