@@ -2,6 +2,9 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import {useEffect} from "react";
+import {addUserData} from "@/utils/createDataFirebase";
+import {readData} from "@/utils/readDataFirebase";
 
 export default function Products() {
     const products = new Array(20).fill(0).map((_, i) => ({
@@ -9,7 +12,10 @@ export default function Products() {
         name: `Product ${i + 1}`,
         image: 'https://via.placeholder.com/200', // Placeholder image URL
     }));
-
+    useEffect(()=>{
+        // addUserData()
+        readData()
+    },[])
     return (
         <div className="p-6 grid grid-cols-3 gap-6">
             <aside className="col-span-1">
